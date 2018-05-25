@@ -1,0 +1,21 @@
+{
+  "name": "data-app",
+  "version": "1.0.0",
+  "main": "source/loader.js",
+  "license": "MIT",
+  "devDependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mysql": "^2.15.0",
+    "node-restful": "^0.2.6",
+    "nodemon": "^1.17.5",
+    "pm2": "^2.10.4"
+  },
+  "dependencies": {
+    "express-query-int": "^3.0.0"
+  },
+  "scripts": {
+    "dev": "nodemon",
+    "prod": "pm2 start src/loader.js --name my-money-backend"
+  }
+}
