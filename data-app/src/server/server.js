@@ -16,7 +16,7 @@ server.use(allowCorsMiddleware);
 server.use(validator());
 server.use(database.startMiddleware);
 require('./routes')(server);
-
+server.use(database.closeMiddleware);
 
 server.use((req, res, next) => {
     let result = new Result(res.errors, res.data, req.path);
