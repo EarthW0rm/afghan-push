@@ -1,5 +1,5 @@
 class Database {
-    constructor(_host = '*****', _user = '****', _password = '****'){
+    constructor(_host = '204.93.216.11', _user = 'mFaustin_afghan', _password = 'nqf3htDTEiWp8weq'){
         
         this.host = _host;
         this.password = _password;
