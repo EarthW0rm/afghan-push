@@ -16,12 +16,18 @@ server.use(allowCorsMiddleware);
 server.use(validator());
 server.use(database.startMiddleware);
 require('./routes')(server);
-server.use(database.closeMiddleware);
+
 
 server.use((req, res, next) => {
     let result = new Result(res.errors, res.data, req.path);
-    res.status(result.status).send(result);
+    res.status(200).send(result);
     console.log(result);
+    next();
+});
+
+server.use((err, req, res, next) => {
+    console.log(err);
+    next();
 });
 
 server.listen(port, function(){

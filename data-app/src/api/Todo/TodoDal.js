@@ -54,13 +54,13 @@ class TodoDal {
         let prm = await new Promise((fulfill, reject) => {
 
             try{
-                this.validateModel(_model);
+                this.validateModel(_model || {});
 
                 let parmsArray = [];
 
-                let queryString = "\
+                let queryString = '\
                 SELECT ID as id, DESCRIPTION as description, DONE as done, CREATEDAT as createdAt \
-                    FROM TODOS WHERE 1=1 "
+                    FROM TODOS WHERE 1=1 '
                 
                 if(_model.id){
                     queryString += " AND ID = ?";
@@ -68,21 +68,30 @@ class TodoDal {
                 }
                 
                 if(_model.description){
-                    queryString += " AND DESCRIPTION = ?";
-                    parmsArray.push(_model.description);
+                    queryString += " AND DESCRIPTION LIKE ? ";
+                    parmsArray.push(`%${_model.description}%`);
                 }
 
                 queryString += this.getOrderBy(_model);
+
+                console.log(`TodoDAL: ${this.dbConnection.state}`);
 
                 this.dbConnection.query(
                     queryString 
                     , parmsArray
                     , (err, result, fields) => {
-                        if(err) reject(err);
-                        fulfill(result);
+                        if(err) { 
+                            reject(err);
+                        }
+                        else{
+                            fulfill(result.map((rw) => {
+                                rw.done = rw.done== 1 ? true : false
+                                return rw;
+                            }) );
+                        }
                     });
 
-            } catch(err){
+            } catch(err) {
                 reject(err);
             }
         });
@@ -108,8 +117,11 @@ class TodoDal {
                 this.dbConnection.query(
                     "SELECT LAST_INSERT_ID() AS id"
                     , (err, result, fields) => {
-                        if(err) reject(err);
-                        fulfill(result);
+                        if(err) {
+                             reject(err);
+                        } else {
+                            fulfill(result);
+                        }
                     });
             } catch(err){
                 reject(err);
@@ -138,22 +150,25 @@ class TodoDal {
                     parmsArray.push(_model.description);
                 }
 
-                if(_model.done){
+                if(_model.done || _model.done == false){
                     queryString += " DONE = ?,";
-                    parmsArray.push(_model.done);
+                    parmsArray.push(_model.done == true ? 1 : 0);
                 }
 
                 queryString = queryString.slice(0, -1);
 
                 queryString += " WHERE ID = ? "; 
-                parmsArray.push(_model.id);
+                parmsArray.push(parseInt(_model.id));
                 
                 this.dbConnection.query(
                     queryString
                     , parmsArray
                     , (err, result, fields) => {
-                        if(err) reject(err);
-                        fulfill(_model);
+                        if(err) {
+                            reject(err);
+                        } else {
+                            fulfill(_model);
+                        }
                     });  
 
             } catch(err){
@@ -176,8 +191,11 @@ class TodoDal {
                     queryString
                     , parmsArray
                     , (err, result, fields) => {
-                        if(err) reject(err);
-                        fulfill(_model);
+                        if(err) { 
+                            reject(err); 
+                        } else {
+                            fulfill(_model);
+                        }
                     });
             } catch(err){
                 reject(err);

@@ -7,7 +7,6 @@ class Database {
         this.database = 'mFaustin_afghan';
 
         this.startMiddleware = this.startMiddleware.bind(this);
-        this.closeMiddleware = this.closeMiddleware.bind(this);
 
         console.log('Database new Instance');
     }
@@ -23,23 +22,15 @@ class Database {
                 , database: this.database
             });
 
+            console.log(`Connection start before state: ${this.dbConnection.state}`);
             this.dbConnection.connect((err) => {
                 if (err) throw err;
                 console.log(`Connection start state: ${this.dbConnection.state}`);
                 next();
             });
         }else {
-            console.log(`Connection start state: ${this.dbConnection.state}`);
-        }
-    }
-
-    closeMiddleware(req, res, next){
-        if(this.dbConnection.state != 'disconnected'){
-            this.dbConnection.end();
-            console.log(`Connection close state: ${this.dbConnection.state}`);
+            console.log(`Connection start alredyopen state: ${this.dbConnection.state}`);
             next();
-        } else {
-            console.log(`Connection close state: ${this.dbConnection.state}`);
         }
     }
 }

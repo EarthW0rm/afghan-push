@@ -43,8 +43,7 @@ module.exports = (router) => {
             let dal = new TodoDal(database.dbConnection);
             let model = Object.assign({}, req.body, req.params);
             let updateResult = await dal.update(model);
-            let selectResult = await dal.select(updateResult[0]);
-            res.data = selectResult;
+            res.data = model;
         } catch(err) {
             res.error = [err];
         }  
