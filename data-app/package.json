@@ -16,6 +16,6 @@
   },
   "scripts": {
     "dev": "nodemon",
-    "prod": "pm2 start src/loader.js --name my-money-backend"
+    "prod": "pm2 start source/loader.js --name my-money-backend"
   }
 }

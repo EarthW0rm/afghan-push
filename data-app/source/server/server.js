@@ -19,7 +19,7 @@ require('./routes')(server);
 server.use(database.closeMiddleware);
 
 server.use((req, res, next) => {
-    let result = new Result(res.errors, res.data);
+    let result = new Result(res.errors, res.data, req.path);
     res.status(result.status).send(result);
     console.log(result);
 });

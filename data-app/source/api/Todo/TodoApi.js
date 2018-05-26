@@ -19,7 +19,7 @@ module.exports = (router) => {
         try {
             let dal = new TodoDal(database.dbConnection);
             let result = await dal.select(req.params);
-            res.data = result;
+            res.data = result.length > 0 ? result[0] : null;
         } catch(err) {
             res.error = [err];
         }

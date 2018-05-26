@@ -153,7 +153,7 @@ class TodoDal {
                     , parmsArray
                     , (err, result, fields) => {
                         if(err) reject(err);
-                        fulfill([{id: _model.id}]);
+                        fulfill(_model);
                     });  
 
             } catch(err){
@@ -177,7 +177,7 @@ class TodoDal {
                     , parmsArray
                     , (err, result, fields) => {
                         if(err) reject(err);
-                        fulfill({sucess: true});
+                        fulfill(_model);
                     });
             } catch(err){
                 reject(err);
