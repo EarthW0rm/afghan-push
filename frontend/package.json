@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "AGPL-3.0",
-
+  "scripts": {
+    "dev": "webpack-dev-server --progress --env.API_URL=http://localhost:8080/api --colors --hot --open --mode development",
+    "prod": "webpack --progress -p"
+  },
   "devDependencies": {
     "axios": "^0.18.0",
     "babel-core": "6.26.0",
