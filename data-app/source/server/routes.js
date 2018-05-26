@@ -4,7 +4,7 @@ module.exports = (server) => {
     const routerApi = express.Router();
     server.use('/api', routerApi);
 
-    const todoApi = require('../api/TodoApi')(routerApi);
+    const todoApi = require('../api/Todo/TodoApi')(routerApi);
 
     
 };

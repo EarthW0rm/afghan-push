@@ -5,6 +5,7 @@ const allowCorsMiddleware = require('./config/cors');
 const queryParser = require('express-query-int');
 const database = require('../database/database');
 const server = express();
+const Result = require('../api/Common/result');
 var validator = require('express-validator');
 
 server.use(bodyParser.urlencoded({extended: true}));
@@ -17,9 +18,14 @@ server.use(database.startMiddleware);
 require('./routes')(server);
 server.use(database.closeMiddleware);
 
+server.use((req, res, next) => {
+    let result = new Result(res.errors, res.data);
+    res.status(result.status).send(result);
+    console.log(result);
+});
+
 server.listen(port, function(){
     console.log(`BACKEND is running, port: ${port}`);
 });
-
 
 module.exports = server;
