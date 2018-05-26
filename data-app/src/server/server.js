@@ -25,7 +25,7 @@ server.use((req, res, next) => {
 });
 
 server.listen(port, function(){
-    console.log(`BACKEND is running, port: ${port}`);
+    console.log(`DATA-APP is running, port: ${port}`);
 });
 
 module.exports = server;

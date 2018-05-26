@@ -1,8 +1,8 @@
 {
   "name": "data-app",
   "version": "1.0.0",
-  "main": "source/loader.js",
-  "license": "MIT",
+  "main": "src/loader.js",
+  "license": "AGPL-3.0",
   "devDependencies": {
     "express": "^4.16.3",
     "mysql": "^2.15.0",
@@ -16,6 +16,7 @@
   },
   "scripts": {
     "dev": "nodemon",
-    "prod": "pm2 start source/loader.js --name my-money-backend"
+    "prod": "pm2 start src/loader.js --name data-app",
+    "container": "pm2-docker start src/loader.js --name data-app"
   }
 }

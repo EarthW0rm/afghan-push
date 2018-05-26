@@ -1,5 +1,5 @@
 class Database {
-    constructor(_host = '204.93.216.11', _user = 'mFaustin_afghan', _password = 'nqf3htDTEiWp8weq'){
+    constructor(_host = process.env.DB_HOST, _user = process.env.DB_USER, _password = process.env.DB_PASS){
         
         this.host = _host;
         this.password = _password;
